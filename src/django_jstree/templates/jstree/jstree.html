@@ -1,0 +1,23 @@
+{% load i18n static %}<script src="{% static "django_jstree/js/jquery-3.4.1.min.js" %}"></script>
+<link rel="stylesheet" href="{% static "django_jstree/css/default/style.min.css" %}">
+<script src="{% static "django_jstree/js/jstree.min.js" %}" ></script>
+
+<div id="{{ treename }}" name="{{ treename }}"></div>
+<script>
+startnode = {{ startnode }}; 
+$(function() {
+    $('#{{ treename }}').jstree({
+        'core' : {
+            'data' : {
+                'url': function (node) {
+                    if (node.id === '#') { node.id = startnode; }
+                    return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leafmodelname }}/' + node.id;
+                },
+                'datatype' : 'json'
+            }
+        },
+        'state' : { 'key' : '{{ treemodelname }}' },
+        'plugins' : ['massload', 'state', 'unique'],
+    });
+});
+</script>
