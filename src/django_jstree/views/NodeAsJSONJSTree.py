@@ -7,6 +7,6 @@ def showNodeAsJSONJSTree(request, appname, treemodelname, leafmodelname=None, no
     treemodel = getattr(_imp, treemodelname)
     myserializer = JSTreeNodeSerializer()
     if nodeid == 0:
-        return HttpResponse(content=myserializer.serialize(treemodel.get_root_nodes(), max_depth=0, leafmodelname=leafmodelname), content_type="application/json")      
+        return HttpResponse(content=myserializer.serialize(treemodel.get_root_nodes(), max_depth=2, leafmodelname=leafmodelname), content_type="application/json")      
     else:
-        return HttpResponse(content=myserializer.serialize(treemodel.objects.filter(id=nodeid), max_depth=0, leafmodelname=leafmodelname), content_type="application/json")
+        return HttpResponse(content=myserializer.serialize(treemodel.objects.filter(id=nodeid), max_depth=2, leafmodelname=leafmodelname), content_type="application/json")

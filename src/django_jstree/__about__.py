@@ -19,5 +19,5 @@ __email__ = "networkteam@primerica.com"
 __license__ = "BSD or Apache License, Version 2.0"
 __copyright__ = "Copyright 2019 {}".format(__author__)
 __includedata__ = True
-__includedatafiles__ = {'' : ['templates/jstree/jstree.html','static/django_jstree/css/default/*','static/django_jstree/css/default-dark/*','static/django_jstree/js/*']}
+__includedatafiles__ = {'' : ['templates/jstree/jstree.html','static/django_jstree/css/*','static/django_jstree/css/default/*','static/django_jstree/css/default-dark/*','static/django_jstree/js/*','static/django_jstree/images/*']}
 __excludedatafiles__ = {}

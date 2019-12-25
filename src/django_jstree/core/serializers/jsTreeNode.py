@@ -1,4 +1,5 @@
 from django.core.serializers.json import Serializer
+from django.conf import settings
 
 class JSTreeNodeSerializer(Serializer):
     def _init_options(self):
@@ -11,7 +12,7 @@ class JSTreeNodeSerializer(Serializer):
         super()._init_options()
 
     def get_dump_object(self, obj, curdepth = 0):
-        data = {'id': obj.id, 'text':str(obj), 'icon':'/static/images/folder.png', 'children': []}
+        data = {'id': obj.id, 'text':str(obj), 'children': [], 'icon':'jstree-root' if curdepth == 0 else 'jstree-branch'}
         try:
             curdepth += 1
         except NameError:
@@ -25,14 +26,13 @@ class JSTreeNodeSerializer(Serializer):
                 data['children'] = False
         else:
             data['children'] = True if obj.get_children_count() > 0  else False
-        """        
+               
         for curleafmodel in self.leafmodelname:
           if eval('obj.'+curleafmodel+'.count()') > 0:
               if isinstance(data['children'], bool):
                   data['children'] = []
                   
               for curleafobj in eval('obj.'+curleafmodel+'.all()'):
-                  data['children'].append({'id':curleafobj.id, 'text':str(curleafobj), 'icon':'/static/images/leaf.png', 'children':False})
-        """
+                  data['children'].append({'id':curleafmodel+"_"+str(curleafobj.id), 'text':str(curleafobj), 'icon':'jstree-leaf jstree-' + curleafmodel+'-leaf', 'children':False})
         if data['children'] == False: data.pop('children')
         return data
