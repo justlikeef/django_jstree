@@ -4,15 +4,15 @@ from django.conf import settings
 class JSTreeNodeSerializer(Serializer):
     def _init_options(self):
         self.max_depth = self.options.pop('max_depth', 0)
-        self.leafmodelname = self.options.pop('leafmodelname', 0)
-        if self.leafmodelname.find(','):
-          self.leafmodelname = self.leafmodelname.split(',')
+        self.leaffieldname = self.options.pop('leaffieldname', 0)
+        if self.leaffieldname.find(','):
+          self.leaffieldname = self.leaffieldname.split(',')
         else:
-          self.leafmodelname = [self.leafmodelname]
+          self.leaffieldname = [self.leaffieldname]
         super()._init_options()
 
     def get_dump_object(self, obj, curdepth = 0):
-        data = {'id': obj.id, 'text':str(obj), 'children': [], 'icon':'jstree-root' if curdepth == 0 else 'jstree-branch'}
+        data = {'id': str(obj.path)+'_'+str(obj.id), 'text':str(obj), 'children': [], 'icon':'jstree-root' if curdepth == 0 else 'jstree-branch'}
         try:
             curdepth += 1
         except NameError:
@@ -27,12 +27,12 @@ class JSTreeNodeSerializer(Serializer):
         else:
             data['children'] = True if obj.get_children_count() > 0  else False
                
-        for curleafmodel in self.leafmodelname:
-          if eval('obj.'+curleafmodel+'.count()') > 0:
+        for curleaffield in self.leaffieldname:
+          if eval('obj.'+curleaffield+'.count()') > 0:
               if isinstance(data['children'], bool):
                   data['children'] = []
                   
-              for curleafobj in eval('obj.'+curleafmodel+'.all()'):
-                  data['children'].append({'id':curleafmodel+"_"+str(curleafobj.id), 'text':str(curleafobj), 'icon':'jstree-leaf jstree-' + curleafmodel+'-leaf', 'children':False})
+              for curleafobj in eval('obj.'+curleaffield+'.all()'):
+                  data['children'].append({'id':str(obj.path)+'_'+str(obj.id)+'_'+curleaffield+"_"+str(curleafobj.id), 'text':str(curleafobj), 'icon':'jstree-leaf jstree-' + curleaffield+'-leaf', 'children':False})
         if data['children'] == False: data.pop('children')
         return data

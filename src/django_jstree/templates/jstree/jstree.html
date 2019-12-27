@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static "django_jstree/css/default/style.min.css" %}">
 <link rel="stylesheet" href="{% static "django_jstree/css/theme.css" %}">
 <script src="{% static "django_jstree/js/jstree.min.js" %}" ></script>
-
+{% block additionaljs %}{{ additionalJS }}{% endblock %}
 <div id="{{ treename }}_container" name="{{ treename }}-container" class="jstree-search-container">
 <div id="{{ treename }}_search" name="{{ treename }}-search" class="jstree-search-container">
     <input type="text" value="" id="{{ treename }}-search-input" class="jstree-search-input" placeholder="Search" /><!--<input type="checkbox" id="{{ treename }}-search-fuzzy" name="{{ treename }}-search-fuzzy" class="jstree-search-fuzzy" /><label for="{{ treename }}-search-fuzzy">Include close results</label>--->
@@ -33,16 +33,27 @@ $(function() {
             'data' : {
                 'url': function (node) {
                     if (node.id === '#') { 
-                        return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leafmodelname }}/' + {{startnode}};
+                        return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + {{startnode}};
                     } else {
-                        return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leafmodelname }}/' + node.id;
+                        return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + node.id;
                     }
                 }
             }
         },
-        'state' : { 'key' : '{{ treemodelname }}' },
-        'search' : { 'fuzzy' : false, 'show_only_matches' : true, 'show_only_matches_children' : true},
-        'plugins' : ['state', 'search', 'unique', 'contextmenu']
+        {% if enableState %}'state' : { 'key' : '{{ treename }}' },{% endif %}
+        {% if enableSearch %}'search' : { 'fuzzy' : {% if enableFuzzySearch %} true{% else %} false{% endif %}, 'show_only_matches' : {% if showOnlyMatches %} true{% else %} false{% endif %}, 'show_only_matches_children' : {% if showOnlyMatchesChildren %} true{% else %} false{% endif %}},{% endif %}
+        'plugins' : [
+            {% if enableCheckbox %}"checkbox",{% endif %}
+            {% if enableContextMenu %}"contextmenu",{% endif %}
+            {% if enableDND %}"dnd",{% endif %}
+            {% if enableSearch %}"search",{% endif %}
+            {% if enableSort %}"sort",{% endif %}
+            {% if enableState %}"state",{% endif %}
+            {% if applyTypes %}"types",{% endif %}
+            {% if enableUnique %}"unique",{% endif %}
+            {% if enableWholerow %}"wholerow",{% endif %}
+            {% if enableChanged %}"changed",{% endif %}
+            {% if enableConditionalSelect %}"conditionalselect"{% endif %}]
     });
 });
 </script>
