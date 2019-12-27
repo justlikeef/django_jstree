@@ -18,8 +18,7 @@ Quick start
         'django_unmaskpasswordinput',
     ]
 
-3. (optional) Run `python manage.py collectstaticfiles` to copy the required js, css, and resources
-to your static files location
+3. (optional) Run `python manage.py collectstaticfiles` to copy the required js, css, and resources to your static files location
 
 4. Run ``python manage.py migrate`` to create the models in your database.
 
