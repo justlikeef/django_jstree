@@ -12,9 +12,9 @@ class jstree(models.Model):
                                       help_text="Name of one or more fields defined in the model which represent a leaf relationship, seperated by commas. ex. leaf1field[,leaf2field,leafthreefield]")
     enableCheckbox = models.BooleanField( default=False,
                                           verbose_name="Add checkboxes before node?")
-    contextMenu = models.BooleanField(default=False,
-                                      verbose_name="Enable Context Menu Popup?",
-                                      help_text="Enabling this option requires you to define the context menu based on the node type.")
+    enableContextmenu = models.BooleanField(default=False,
+                                            verbose_name="Enable Context Menu Popup?",
+                                            help_text="Enabling this option requires you to define the context menu based on the node type.")
     enableSearch = models.BooleanField( default=False,
                                         verbose_name="Enable search?")
     enableFuzzySearch = models.BooleanField(default=False, 

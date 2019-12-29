@@ -14,22 +14,22 @@ def showJSTreeByName(request, treename, rootnode = 0):
     model = getattr(_imp, jstobj.treemodelname)
     
     typedef = {}
-    if jstobj.applyTypes == True
+    if jstobj.applyTypes == True:
         # Get the node types for this tree
-        for curNodeType in nodeType.objects.filter(jstree_id=jstobj.id)
-          # Build list of valid child nodes
-          typedef[curNodeType.name] = { "max_children":curNodeType.maxChildren,
+        for curNodeType in nodeType.objects.filter(jsTree_id=jstobj.id):
+            # Build list of valid child nodes
+            typedef[curNodeType.name] = { "max_children":curNodeType.maxChildren,
                                         "max_depth":curNodeType.maxDepth,
                                         "valid_children":"",
                                         "icon":iconClass,
                                         "li_attr":liAttributes,
                                         "a_attr":aAttributes
                                       }
-          for curChildType in curNodeType.childNodeTypes.objects.all()
-            typedef[curNodeType.name]["valid_children"] += curChildType.name + ","
-          
-          if len(typedef[curNodeType.name]["valid_children"]) > 0
-            typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]
+            for curChildType in curNodeType.childNodeTypes.objects.all():
+                typedef[curNodeType.name]["valid_children"] += curChildType.name + ","
+
+            if len(typedef[curNodeType.name]["valid_children"]) > 0:
+                typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]
             
             
     
@@ -40,7 +40,7 @@ def showJSTreeByName(request, treename, rootnode = 0):
                 'startnode':rootnode,
                 'typeDefs':typedef,
                 'enableCheckbox':jstobj.enableCheckbox,
-                'ContextMenu':jstobj.contextMenu,
+                'enableContextmenu':jstobj.enableContextmenu,
                 'enableSearch':jstobj.enableSearch,
                 'enableFuzzySearch':jstobj.enableFuzzySearch,
                 'showOnlyMatches':jstobj.showOnlyMatches,
@@ -50,8 +50,8 @@ def showJSTreeByName(request, treename, rootnode = 0):
                 'enableState':jstobj.enableState,
                 'applyTypes':jstobj.applyTypes,
                 'enableUnique':jstobj.enableUnique,
-                'enableWholeRow':jstobj.enableWholeRow,
-                'enableChanged':jstobj.enableWholeRow,
+                'enableWholerow':jstobj.enableWholerow,
+                'enableChanged':jstobj.enableChanged,
                 'additionalJS':jstobj.additionalJS
               }
-    return render(request, "jstree/jsTree.html", )
+    return render(request, "jstree/jsTree.html", context)

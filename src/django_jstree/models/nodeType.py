@@ -13,13 +13,14 @@ class nodeType(models.Model):
                                       verbose_name="Maximum number of child nodes for this type (-1 unlimited)")
     maxDepth = models.IntegerField( default=-1,
                                     verbose_name="Maximum depth of children for this node type (-1 unlimited)")
-    iconClass = models.CharField( max_length=30,
-                                  verbose_name="CSS class",
-                                  help_text="CSS class name to add to nodes of this type")
-    liAttributes = modesl.TextField(default='', blank=True,
+    iconClass = models.CharField(   default='', blank=True,
+                                    max_length=30,
+                                    verbose_name="CSS class",
+                                    help_text="CSS class name to add to nodes of this type")
+    liAttributes = models.TextField(default='', blank=True,
                                     verbose_name="LI Attributes",
                                     help_text="Additional attributes to add to the generated LI element")
-    aAttributes = modesl.TextField(default='', blank=True,
+    aAttributes = models.TextField(default='', blank=True,
                                     verbose_name="A Attributes",
                                     help_text="Additional attributes to add to the generated A element")
     childNodeTypes = models.ManyToManyField("nodeType",

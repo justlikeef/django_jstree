@@ -40,20 +40,21 @@ $(function() {
                 }
             }
         },
-        {% if enableState %}'state' : { 'key' : '{{ treename }}' },{% endif %}
-        {% if enableSearch %}'search' : { 'fuzzy' : {% if enableFuzzySearch %} true{% else %} false{% endif %}, 'show_only_matches' : {% if showOnlyMatches %} true{% else %} false{% endif %}, 'show_only_matches_children' : {% if showOnlyMatchesChildren %} true{% else %} false{% endif %}},{% endif %}
+{% if enableState %}		'state' : { 'key' : '{{ treename }}' },{% endif %}
+{% if enableSearch %}		'search' : { 'fuzzy' : {% if enableFuzzySearch %} true{% else %} false{% endif %}, 'show_only_matches' : {% if showOnlyMatches %} true{% else %} false{% endif %}, 'show_only_matches_children' : {% if showOnlyMatchesChildren %} true{% else %} false{% endif %} },{% endif %}
         'plugins' : [
-            {% if enableCheckbox %}"checkbox",{% endif %}
-            {% if enableContextMenu %}"contextmenu",{% endif %}
-            {% if enableDND %}"dnd",{% endif %}
-            {% if enableSearch %}"search",{% endif %}
-            {% if enableSort %}"sort",{% endif %}
-            {% if enableState %}"state",{% endif %}
-            {% if applyTypes %}"types",{% endif %}
-            {% if enableUnique %}"unique",{% endif %}
-            {% if enableWholerow %}"wholerow",{% endif %}
-            {% if enableChanged %}"changed",{% endif %}
-            {% if enableConditionalSelect %}"conditionalselect"{% endif %}]
+{% if enableCheckbox %}			"checkbox",
+{% endif %}{% if enableContextmenu %}			"contextmenu",
+{% endif %}{% if enableDND %}			"dnd",
+{% endif %}{% if enableSearch %}			"search",
+{% endif %}{% if enableSort %}			"sort",
+{% endif %}{% if enableState %}			"state",
+{% endif %}{% if applyTypes %}			"types",
+{% endif %}{% if enableUnique %}			"unique",
+{% endif %}{% if enableWholerow %}			"wholerow",
+{% endif %}{% if enableChanged %}			"changed",
+{% endif %}{% if enableConditionalSelect %}			"conditionalselect"
+{% endif %}		]
     });
 });
 </script>
