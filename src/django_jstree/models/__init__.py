@@ -1,1 +1,1 @@
-from django_jstree.models import jstree, nodeType
+from django_jstree.models import jstree, nodeType, popupMenuItem
