@@ -24,7 +24,7 @@ class JSTreeNodeSerializer(Serializer):
             else:
                 data['children'] = False
         else:
-            data['children'] = True if obj.get_children_count() > 0  else False
+            data['children'] = True if obj.get_children_count() > 0 else False
                
         for curleaffield in self.leaffieldname:
           if eval('obj.'+curleaffield+'.count()') > 0:
