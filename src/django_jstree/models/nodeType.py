@@ -6,9 +6,9 @@ class nodeType(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     description = models.TextField(default='', blank=True)
-    jsTree = models.ForeignKey( "jstree", on_delete=models.CASCADE,
-                                verbose_name="Trees",
-                                help_text="Apply this type to these trees.")
+    jsTree = models.ManyToManyField("jstree",
+                                    verbose_name="Trees",
+                                    help_text="Apply this type to these trees.")
     maxChildren = models.IntegerField(default=-1,
                                       verbose_name="Maximum number of child nodes for this type (-1 unlimited)")
     maxDepth = models.IntegerField( default=-1,
@@ -20,12 +20,12 @@ class nodeType(models.Model):
     liAttributes = models.TextField(default='', blank=True,
                                     verbose_name="LI Attributes",
                                     help_text="Additional attributes to add to the generated LI element")
-    aAttributes = models.TextField(default='', blank=True,
+    aAttributes = models.TextField( default='', blank=True,
                                     verbose_name="A Attributes",
                                     help_text="Additional attributes to add to the generated A element")
-    childNodeTypes = models.ManyToManyField("nodeType",
+    childNodeTypes = models.ManyToManyField("nodeType", blank=True,
                                             verbose_name="Valid Child Node Types",
-                                            help_text="Restricts the type of children this node can have (leave empty for no restrictions)")
-    
+                                            help_text="Restricts the type of children this node can have (select none for no restrictions)")
+
     def __str__(self):
         return self.name
