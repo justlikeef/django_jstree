@@ -16,22 +16,20 @@ def showJSTreeByName(request, treename, rootnode = 0):
     typedef = {}
     if jstobj.applyTypes == True:
         # Get the node types for this tree
-        for curNodeType in nodeType.objects.filter(jsTree_id=jstobj.id):
+        for curNodeType in nodeType.objects.filter(jstrees__id=jstobj.id):
             # Build list of valid child nodes
             typedef[curNodeType.name] = { "max_children":curNodeType.maxChildren,
                                         "max_depth":curNodeType.maxDepth,
                                         "valid_children":"",
-                                        "icon":iconClass,
-                                        "li_attr":liAttributes,
-                                        "a_attr":aAttributes
+                                        "icon":curNodeType.iconClass,
+                                        "li_attr":curNodeType.liAttributes,
+                                        "a_attr":curNodeType.aAttributes
                                       }
-            for curChildType in curNodeType.childNodeTypes.objects.all():
+            for curChildType in curNodeType.childNodeTypes.all():
                 typedef[curNodeType.name]["valid_children"] += curChildType.name + ","
 
             if len(typedef[curNodeType.name]["valid_children"]) > 0:
-                typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]
-            
-            
+                typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]          
     
     context = { 'treename':treename,
                 'appname':jstobj.appname,

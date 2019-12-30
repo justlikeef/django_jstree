@@ -32,11 +32,14 @@ $(function() {
             'check_callback' : true,
             'data' : {
                 'url': function (node) {
+                    var dataURL = ''
                     if (node.id === '#') { 
-                        return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + {{startnode}};
+                        dataURL = '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + {{startnode}};
                     } else {
-                        return '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + node.id;
+                        dataURL = '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + node.id;
                     }
+{% if applyTypes %}                    dataURL += "?applyTypes=True";
+{% endif %}                    return dataURL
                 }
             }
         },

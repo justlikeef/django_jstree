@@ -6,7 +6,7 @@ class nodeType(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     description = models.TextField(default='', blank=True)
-    jsTree = models.ManyToManyField("jstree",
+    jstrees = models.ManyToManyField("jstree",
                                     verbose_name="Trees",
                                     help_text="Apply this type to these trees.")
     maxChildren = models.IntegerField(default=-1,
