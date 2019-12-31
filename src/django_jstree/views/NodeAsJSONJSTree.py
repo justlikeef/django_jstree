@@ -1,10 +1,12 @@
 from django.core import serializers
 from django.http import HttpResponse
 from django_jstree.core.serializers.jsTreeNode import JSTreeNodeSerializer
+import logging
         
 def showNodeAsJSONJSTree(request, appname, treemodelname, leaffieldname=None, nodeid=0):
+    logger = logging.getLogger('django.server')
     _imp = __import__(appname+'.models',globals(), locals(), [treemodelname])
-    applytypesparm = request.GET.get("applyTypes",False)
+    applytypesparm = True if request.GET.get("applyTypes", False) == "True" else False
     treemodel = getattr(_imp, treemodelname)
     myserializer = JSTreeNodeSerializer()
     if nodeid == 0:

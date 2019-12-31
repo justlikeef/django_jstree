@@ -31,7 +31,7 @@ class jstree(models.Model):
                                       verbose_name="Remember Node State?", help_text="Remember if the nodes' state the last time this tree was used.")
     applyTypes = models.BooleanField( default=False,
                                       verbose_name="Add node type?",
-                                      help_text="If checked, the method 'getJSTreeType()' will be called on each node in the tree and added to the type parameter on each node. If the function does not exist on the model, then the name of the model class is added to type parameter")
+                                      help_text="If checked, the method 'getTreeNodeType()' will be called on each node in the tree and added to the type parameter on each node. If the function does not exist on the model, then the name of the model class is added to type parameter")
     enableUnique = models.BooleanField( default=False,
                                         verbose_name="Require unique names of sibling nodes?")
     enableWholerow = models.BooleanField( default=False,

@@ -15,7 +15,10 @@ class JSTreeNodeSerializer(Serializer):
     def get_dump_object(self, obj, curdepth = 0):
         data = {'id': str(obj.path)+'_'+str(obj.id), 'text':str(obj), 'children': [], 'icon':'jstree-root' if curdepth == 0 else 'jstree-branch'}
         if self.applytypes == True:
-            data["type"] = "Testing123"
+            if hasattr(obj, 'getTreeNodeType'):
+                data["type"] = obj.getTreeNodeType()
+            else:
+                data["type"] = obj.__class__.__name__
         
         if curdepth <= self.max_depth:
             if obj.get_children_count() > 0:
