@@ -11,6 +11,13 @@
 <div id="{{ treename }}" name="{{ treename }}"></div>
 </div>
 <script>
+{% if applyTypes %}
+function getPopupMenuDef(node) {
+	{{ menudef }}
+	
+	if ($(node).hasClass("folder")) {
+}
+{% endif %}
 $(function() {
     var to = false;
 

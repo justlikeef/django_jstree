@@ -1,4 +1,6 @@
 from django.contrib import admin
+from treebeard.admin import TreeAdmin
+from treebeard.forms import movenodeform_factory
 from django_jstree.models.jstree import jstree
 from django_jstree.models.nodeType import nodeType
 from django_jstree.models.popupMenuItem import popupMenuItem
@@ -10,8 +12,9 @@ class nodeTypePopupMenuItemInline(admin.TabularInline):
 class nodeTypeAdmin(admin.ModelAdmin):
     inlines = (nodeTypePopupMenuItemInline,)
 
-class popupMenuItemAdmin(admin.ModelAdmin):
+class popupMenuItemAdmin(TreeAdmin):
     inlines = (nodeTypePopupMenuItemInline,)
+    form = movenodeform_factory(popupMenuItem)
 
 # Register your models here.
 admin.site.register(jstree)

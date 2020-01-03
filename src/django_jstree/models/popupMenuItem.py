@@ -1,8 +1,8 @@
 from django.db import models
 from django_jstree.models import nodeType
+from treebeard.mp_tree import MP_Node
 
-
-class popupMenuItem(models.Model):
+class popupMenuItem(MP_Node):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     description = models.TextField(default='', blank=True)
@@ -21,6 +21,7 @@ class popupMenuItem(models.Model):
                                     max_length=255,
                                     verbose_name="Call on click",
                                     help_text="Name of Javascript function to call on click")
+    childMenuItems = models.ManyToManyField("popupMenuItem", verbose_name="Child Menu Items", blank=True)
 
     def __str__(self):
         return self.name
