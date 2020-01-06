@@ -2,6 +2,25 @@ from django.shortcuts import render
 from django_jstree.models.jstree import jstree
 from django_jstree.models.nodeType import nodeType
 import random
+import json
+
+def buildMenuDef(menuItem):
+    menuItemDef = {
+        "separator_before":menuItem.seperatorBefore,
+        "separator_after":menuItem.seperatorAfter,
+        "label":menuItem.menuLabel,
+        "title":menuItem.menuTooltip,
+        "action":menuItem.menuClickJSFunction,
+        "icon":menuItem.menuItemClass,
+        "shortcut":menuItem.shortcut,
+        "shortcut_label":menuItem.shortcutLabel
+    }
+    
+    if menuItem.childMenuItems.count() > 0:
+        for curChild in nodeTypeObj.childMenuItems.all():
+            menuItemDef[menuItem.name]["submenu"][curChild.name]=buildMenuDef(curChild)
+        
+    return menuItemDef
 
 def showJSTreeByName(request, treename, rootnode = 0):
     try:
@@ -9,34 +28,43 @@ def showJSTreeByName(request, treename, rootnode = 0):
     except jstree.DoesNotExist:
       print("The requested {} tree does not exist", treename)
 
-    
     _imp = __import__(jstobj.appname+'.models',globals(), locals(), jstobj.treemodelname)
     model = getattr(_imp, jstobj.treemodelname)
     
     typedef = {}
+    popupMenuJSON = ""
     if jstobj.applyTypes == True:
+        popupMenuDef = {}
         # Get the node types for this tree
-        for curNodeType in nodeType.objects.filter(jstrees__id=jstobj.id):
+        for curNodeType in jstobj.nodeTypes.all():
             # Build list of valid child nodes
-            typedef[curNodeType.name] = { "max_children":curNodeType.maxChildren,
-                                        "max_depth":curNodeType.maxDepth,
-                                        "valid_children":"",
-                                        "icon":curNodeType.iconClass,
-                                        "li_attr":curNodeType.liAttributes,
-                                        "a_attr":curNodeType.aAttributes
-                                      }
+            typedef[curNodeType.name] = { 
+                "max_children":curNodeType.maxChildren,
+                "max_depth":curNodeType.maxDepth,
+                "valid_children":"",
+                "icon":curNodeType.iconClass,
+                "li_attr":curNodeType.liAttributes,
+                "a_attr":curNodeType.aAttributes
+            }
             for curChildType in curNodeType.childNodeTypes.all():
                 typedef[curNodeType.name]["valid_children"] += curChildType.name + ","
 
             if len(typedef[curNodeType.name]["valid_children"]) > 0:
-                typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]          
+                typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]    
+        
+            for curMenuItem in curNodeType.popupMenuItems.all():
+                popupMenuDef[curNodeType.name] = {}
+                popupMenuDef[curNodeType.name][curMenuItem.name] = buildMenuDef(curMenuItem)
+        
+        popupMenuJSON = json.dumps(popupMenuDef)  
     
     context = { 'treename':treename,
                 'appname':jstobj.appname,
                 'treemodelname':jstobj.treemodelname,
                 'leaffieldname':jstobj.leaffieldname,
                 'startnode':rootnode,
-                'typeDefs':typedef,
+                'menudef':popupMenuJSON,
+                'typedef':typedef,
                 'enableCheckbox':jstobj.enableCheckbox,
                 'enableContextmenu':jstobj.enableContextmenu,
                 'enableSearch':jstobj.enableSearch,

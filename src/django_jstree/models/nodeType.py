@@ -1,16 +1,16 @@
 from django.db import models
 from django_jstree.models import jstree
 
-
 class nodeType(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     description = models.TextField(default='', blank=True)
-    jstrees = models.ManyToManyField("jstree",
-                                    verbose_name="Trees",
-                                    help_text="Apply this type to these trees.")
-    maxChildren = models.IntegerField(default=-1,
-                                      verbose_name="Maximum number of child nodes for this type (-1 unlimited)")
+    jstrees = models.ManyToManyField(   "jstree",
+                                        related_name="nodeTypes",
+                                        verbose_name="Trees",
+                                        help_text="Apply this type to these trees.")
+    maxChildren = models.IntegerField(  default=-1,
+                                        verbose_name="Maximum number of child nodes for this type (-1 unlimited)")
     maxDepth = models.IntegerField( default=-1,
                                     verbose_name="Maximum depth of children for this node type (-1 unlimited)")
     iconClass = models.CharField(   default='', blank=True,

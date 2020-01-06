@@ -4,7 +4,7 @@ from treebeard.forms import movenodeform_factory
 from django_jstree.models.jstree import jstree
 from django_jstree.models.nodeType import nodeType
 from django_jstree.models.popupMenuItem import popupMenuItem
-from django_jstree.models.popupMenuItem import nodeTypePopupMenuItem
+from django_jstree.models.nodeTypePopupMenuItem import nodeTypePopupMenuItem
 
 class nodeTypePopupMenuItemInline(admin.TabularInline):
     model = nodeTypePopupMenuItem
