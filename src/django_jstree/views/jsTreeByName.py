@@ -17,7 +17,7 @@ def buildMenuDef(menuItem):
     }
     
     if menuItem.childMenuItems.count() > 0:
-        for curChild in nodeTypeObj.childMenuItems.all():
+        for curChild in menuItem.childMenuItems.all():
             menuItemDef[menuItem.name]["submenu"][curChild.name]=buildMenuDef(curChild)
         
     return menuItemDef
@@ -52,8 +52,8 @@ def showJSTreeByName(request, treename, rootnode = 0):
             if len(typedef[curNodeType.name]["valid_children"]) > 0:
                 typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]    
         
+            popupMenuDef[curNodeType.name] = {}
             for curMenuItem in curNodeType.popupMenuItems.all():
-                popupMenuDef[curNodeType.name] = {}
                 popupMenuDef[curNodeType.name][curMenuItem.name] = buildMenuDef(curMenuItem)
         
         popupMenuJSON = json.dumps(popupMenuDef)  
