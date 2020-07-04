@@ -30,19 +30,20 @@ class JSTreeNodeSerializer(Serializer):
             data['children'] = True if obj.get_children_count() > 0 else False
                
         for curleaffield in self.leaffieldname:
-          if eval('obj.'+curleaffield+'.count()') > 0:
-              if isinstance(data['children'], bool):
-                  data['children'] = []
-                  
-              for curleafobj in eval('obj.'+curleaffield+'.all()'):
-                  childdata = {'id':str(obj.path)+'_'+str(obj.id)+'_'+curleaffield+"_"+str(curleafobj.id), 'text':str(curleafobj), 'icon':'jstree-leaf jstree-' + curleaffield+'-leaf', 'children':False}
-                  if self.applytypes == True:
-                      if hasattr(curleafobj, 'getTreeNodeType'):
-                          childdata["type"] = curleafobj.getTreeNodeType()
-                      else:
-                          childdata["type"] = curleafobj.__class__.__name__
-                  
-                  data['children'].append(childdata)
+          if (hasattr(obj, curleaffield)):
+              if eval(''.join(['obj.', curleaffield, '.count()'])) > 0:
+                  if isinstance(data['children'], bool):
+                      data['children'] = []
+                   
+                  for curleafobj in eval(''.join(['obj.', curleaffield, '.all()'])):
+                      childdata = {'id':''.join([str(obj.path),'_',str(obj.id),'_',curleaffield,"_",str(curleafobj.id)]), 'text':str(curleafobj), 'icon':"".join(['jstree-leaf jstree-',curleaffield,'-leaf']), 'children':False}
+                      if self.applytypes == True:
+                          if hasattr(curleafobj, 'getTreeNodeType'):
+                              childdata["type"] = curleafobj.getTreeNodeType()
+                          else:
+                              childdata["type"] = curleafobj.__class__.__name__
+                      
+                      data['children'].append(childdata)
                   
         if data['children'] == False:
             data.pop('children')

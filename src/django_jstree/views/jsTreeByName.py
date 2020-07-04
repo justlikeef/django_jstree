@@ -32,7 +32,7 @@ def showJSTreeByName(request, treename, rootnode = 0):
     model = getattr(_imp, jstobj.treemodelname)
     
     typedef = {}
-    popupMenuJSON = ""
+    popupMenuJSON = "{}"
     if jstobj.applyTypes == True:
         popupMenuDef = {}
         # Get the node types for this tree
