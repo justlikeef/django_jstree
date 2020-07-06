@@ -4,7 +4,7 @@ from django_jstree.models.nodeType import nodeType
 import random
 import json
 
-def buildMenuDef(menuItem):
+def jsTreeBuildMenuDef(menuItem):
     menuItemDef = {
         "separator_before":menuItem.seperatorBefore,
         "separator_after":menuItem.seperatorAfter,
@@ -13,12 +13,14 @@ def buildMenuDef(menuItem):
         "action":menuItem.menuClickJSFunction,
         "icon":menuItem.menuItemClass,
         "shortcut":menuItem.shortcut,
-        "shortcut_label":menuItem.shortcutLabel
+        "shortcut_label":menuItem.shortcutLabel,
+        "submenu":{}
     }
     
     if menuItem.childMenuItems.count() > 0:
         for curChild in menuItem.childMenuItems.all():
-            menuItemDef[menuItem.name]["submenu"][curChild.name]=buildMenuDef(curChild)
+            print(curChild);
+            menuItemDef["submenu"][curChild.name] = jsTreeBuildMenuDef(curChild)
         
     return menuItemDef
 
@@ -53,8 +55,8 @@ def showJSTreeByName(request, treename, rootnode = 0):
                 typedef[curNodeType.name]["valid_children"] = typedef[curNodeType.name]["valid_children"][:-1]    
         
             popupMenuDef[curNodeType.name] = {}
-            for curMenuItem in curNodeType.popupMenuItems.all():
-                popupMenuDef[curNodeType.name][curMenuItem.name] = buildMenuDef(curMenuItem)
+            for curMenuItem in curNodeType.popupMenuItems.all().order_by('nodetypepopupmenuitem__displayOrder'):
+                popupMenuDef[curNodeType.name][curMenuItem.name] = jsTreeBuildMenuDef(curMenuItem)
         
         popupMenuJSON = json.dumps(popupMenuDef)  
     
