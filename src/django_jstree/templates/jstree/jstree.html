@@ -4,9 +4,11 @@
 <script src="{% static "django_jstree/js/jstree.min.js" %}"></script>
 {% block additionaljs %}{{ additionalJS }}{% endblock %}
 <div id="{{ treename }}_container" name="{{ treename }}-container" class="jstree-search-container">
+{% if enableSearch %}
 	<div id="{{ treename }}_search" name="{{ treename }}-search" class="jstree-search-container">
 		<input type="text" value="" id="{{ treename }}-search-input" class="jstree-search-input" placeholder="Search" /><!--<input type="checkbox" id="{{ treename }}-search-fuzzy" name="{{ treename }}-search-fuzzy" class="jstree-search-fuzzy" /><label for="{{ treename }}-search-fuzzy">Include close results</label>--->
 	</div>
+{% endif %}
 	<div id="{{ treename }}" name="{{ treename }}"></div>
 </div>
 <script>
