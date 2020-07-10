@@ -9,7 +9,7 @@ __all__ = [
     "__email__", "__license__", "__copyright__","__requirements__"
 ]
 
-__requirements__ = ["Django"]
+__requirements__ = ["Django","mysqlclient","django_treebeard"]
 __title__ = "django_jstree"
 __summary__ = "jsTree integration for Django"
 __uri__ = "https://git01.pfsfhq.com/Operations/django_jstree/homepage/"

@@ -44,9 +44,9 @@ jstreejq(function() {
                 'url': function (node) {
                     var dataURL = ''
                     if (node.id === '#') { 
-                        dataURL = '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/{{ startnode }}';
+                        dataURL = '/django_jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/{{ startnode }}';
                     } else {
-                        dataURL = '/jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + node.id;
+                        dataURL = '/django_jstree/shownode/{{ appname }}/{{ treemodelname }}/{{ leaffieldname }}/' + node.id;
                     }
 {% if applyTypes %}                    dataURL += "?applyTypes=True";
 {% endif %}                    return dataURL

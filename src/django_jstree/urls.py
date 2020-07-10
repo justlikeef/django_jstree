@@ -5,9 +5,9 @@ from django_jstree.views import jsTreeByName
 from django_jstree.views import NodeAsJSONJSTree
 
 urlpatterns = [
-    path('shownode/<slug:appname>/<slug:treemodelname>/<slug:leaffieldname>/<int:nodeid>', NodeAsJSONJSTree.showNodeAsJSONJSTree),
-    path('showtree/<slug:appname>/<slug:treemodelname>/<slug:leaffieldname>/<int:rootnode>', jsTree.showJSTree),
-    path('showtree/<slug:appname>/<slug:treemodelname>/<slug:leaffieldname>', jsTree.showJSTree),
-    path('showtree/<slug:treename>', jsTreeByName.showJSTreeByName),
-    path('showtree/<slug:treename>>/<int:rootnode>', jsTreeByName.showJSTreeByName),
+    path('django_jstree/shownode/<slug:appname>/<slug:treemodelname>/<slug:leaffieldname>/<int:nodeid>', NodeAsJSONJSTree.showNodeAsJSONJSTree),
+    path('django_jstree/showtree/<slug:appname>/<slug:treemodelname>/<slug:leaffieldname>/<int:rootnode>', jsTree.showJSTree),
+    path('django_jstree/showtree/<slug:appname>/<slug:treemodelname>/<slug:leaffieldname>', jsTree.showJSTree),
+    path('django_jstree/showtree/<slug:treename>', jsTreeByName.showJSTreeByName),
+    path('django_jstree/showtree/<slug:treename>>/<int:rootnode>', jsTreeByName.showJSTreeByName),
 ]
